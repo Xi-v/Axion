@@ -1,2 +1,5 @@
 # Axion
-Axion is my own creation. Axion is an interpreted programming language based off of science terms. My aim for this project is to try and develop my skills, and to create a language that is very easy to use. This language is trying to be an easy to learn beginner friendly coding language that will allow you to do lots of things in one line of code.
+
+This is a programming language that is designed to be interpreted and able to run almost 20 lines of code in about 1 line.
+Honestly it's not that good at the moment, but I'm trying to work on it.
+thanks for installing Axion.
