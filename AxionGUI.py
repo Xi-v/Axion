@@ -19,6 +19,7 @@ def remove_specific_characters(input_string, characters_to_remove):
         input_string = input_string.replace(char, "")
     return input_string
 
+# Emit function
 def emit_function(content):
     cleaned_content = remove_specific_characters(content, characters_to_remove)
     if cleaned_content in synthesised_variables:
@@ -28,6 +29,7 @@ def emit_function(content):
     else:
         output_display.insert(tk.END, cleaned_content + "\n")
 
+# Synthesise function
 def synthesise_function(content, var_name):
     if var_name not in synthesised_variables:
         synthesised_variables[var_name] = content
@@ -35,6 +37,7 @@ def synthesise_function(content, var_name):
     else:
         output_display.insert(tk.END, f"Variable '{var_name}' already exists with value: '{synthesised_variables[var_name]}'\n")
 
+# React function
 def react_function(user_input):
     start_index = user_input.find(react + opening_bracket)
     end_index = user_input.rfind(closing_bracket)
@@ -56,7 +59,6 @@ def react_function(user_input):
             before_react_comma = react_information[:split_index].strip()
             after_react_comma = react_information[split_index + 1:].strip()
 
-            # Synthesize and Emit logic remains the same as before
             if synthesise in before_react_comma:
                 synthesise_in_react_parts = before_react_comma.split('(')
                 if len(synthesise_in_react_parts) > 1:
@@ -88,23 +90,10 @@ def react_function(user_input):
                 if len(emit_in_react_parts) > 1:
                     after_emit_react_bracket = emit_in_react_parts[1].strip().rstrip(closing_bracket)
                     emit_function(after_emit_react_bracket.strip(speech_marks))
-                    
-def guide_to_the_universe():
+
+# Guide to the Galaxy                    
+def guide_to_the_galaxy():
     guide_info = """
-Physics Theme:
-emit for print – like emitting light to reveal information
-quantum for variables – capturing the idea of quantum states
-force for assigning values – "applying a force" to set a variable
-observe for conditional checks – observing the state of a variable
-loop could be orbit – like an object repeatedly moving around a centre
-
-Chemistry Theme:
-synthesize for define – synthesizing a function
-compound for variables – holding combinations of "elements" (data)
-react for conditional checks – reacting based on a condition
-bond for assignments – bonding values to variables
-break for ending a loop or conditional – breaking a bond
-
 Axion Script:
 Emit: print() 
 Usage - emit(what you want to print) 
@@ -151,7 +140,7 @@ Axion heavily requires you to use '()' and ',' and ':', almost like python, whic
 
 def run_code():
     user_input = input_field.get("1.0", tk.END).strip()
-    input_field.delete("1.0", tk.END)  # Clear input field
+    input_field.delete("1.0", tk.END)
 
     start_index = user_input.find(opening_bracket)
     end_index = user_input.find(closing_bracket, start_index + 1)
@@ -171,33 +160,27 @@ def run_code():
             elif last_word == "react":
                 react_function(user_input)
             elif last_word == "guide_to_the_galaxy":
-                guide_to_the_universe()
+                guide_to_the_galaxy()
         else:
             output_display.insert(tk.END, f"Error: There is no attribute called {last_word}\n")
     else:
         output_display.insert(tk.END, "Error: Brackets are not properly formatted.\n")
-
-# Create the main window
+        
 window = tk.Tk()
 window.title("Axion Code Interpreter")
 window.geometry("800x600")
 window.configure(bg="#2e2e2e")
 
-# Logo (placeholder)
 logo_label = tk.Label(window, text="  Axion Coding Language  ", font=("Consolas", 20), bg="#2e2e2e", fg="#ffcc00")
 logo_label.pack(pady=10)
 
-# Input Field
 input_field = scrolledtext.ScrolledText(window, height=5, font=("Consolas", 14), bg="#1e1e1e", fg="#ffffff")
 input_field.pack(pady=10, padx=20, fill=tk.X)
 
-# Run Button
-run_button = tk.Button(window, text="Run Code", command=run_code, font=("Consolas", 14), bg="#4CAF50", fg="#ffffff")
+run_button = tk.Button(window, text="Run Code", command=run_code, font=("Consolas", 14), bg="darkblue", fg="#ffffff")
 run_button.pack(pady=10)
 
-# Output Display
 output_display = scrolledtext.ScrolledText(window, height=15, font=("Consolas", 14), bg="#1e1e1e", fg="#ffffff")
 output_display.pack(pady=10, padx=20, fill=tk.BOTH)
 
-# Start the main loop
 window.mainloop()
