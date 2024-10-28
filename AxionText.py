@@ -12,14 +12,16 @@ print("Use the line of code 'guide_to_the_galaxy()' to access all of the current
 # Variables
 opening_bracket = '('
 closing_bracket = ')'
-attributes = ['emit', 'synthesise', 'react', 'guide_to_the_galaxy']
+attributes = ['emit', 'synthesise', 'react', 'guide_to_the_galaxy', 'orbit']
 comma = ','
 react = 'react'
 emit = 'emit'
 synthesise = 'synthesise'
+orbit = 'orbit'
 characters_to_remove = [')', '(']
 synthesised_variables = {}
 speech_marks = '"'
+near_infinite = 10**1000
 
 # Helper functions
 def remove_specific_characters(input_string, characters_to_remove):
@@ -110,21 +112,8 @@ def react_function(user_input):
 # Guide function
 def guide_to_the_galaxy():
     print("""
-Physics Theme:
-emit for print – like emitting light to reveal information
-quantum for variables – capturing the idea of quantum states
-force for assigning values – "applying a force" to set a variable
-observe for conditional checks – observing the state of a variable
-loop could be orbit – like an object repeatedly moving around a centre
-
-Chemistry Theme:
-synthesize for define – synthesizing a function
-compound for variables – holding combinations of "elements" (data)
-react for conditional checks – reacting based on a condition
-bond for assignments – bonding values to variables
-break for ending a loop or conditional – breaking a bond
-
 Axion Script:
+
 Emit: print() 
 Usage - emit(what you want to print) 
 To declare a synthesised variable, put speech marks and then the name of that variable for emit to print it.
@@ -139,16 +128,8 @@ Another Usage - react(synthesise(*Inside the variable*, *Variable name*), emit(*
 React at the moment only has two possible uses, more will come 
 
 Orbit: Loop 
-Usage - orbit around earth(5):
-		emit(*What you want to print*)
-Outcome:
-What you want to print
-What you want to print
-What you want to print
-What you want to print
-What you want to print
-
-When stating an orbit, you must say, "orbit around earth(*how many times to loop, leave empty for an infinite amount of times*):"
+Usage - orbit(what type of attribute you want to orbit, number of times to orbit it.)
+e.g: orbit(emit(Hello), 5)) 
 
 Priorities:
 Axion uses a priority list. If you were to do the line of code:
@@ -167,6 +148,35 @@ Characters:
 Axion heavily requires you to use '()' and ',' and ':', almost like python, which it is made out of.
 """)
 
+# Orbit function
+def orbit(user_input, start_index, end_index):
+    start_orbit = user_input.find("(") + 1
+    end_orbit = user_input.find(")")
+
+    if start_orbit > 0 and end_orbit > 0 and end_orbit > start_orbit:
+        orbit_content = user_input[start_orbit:end_orbit].strip()  
+        if comma in orbit_content: 
+            orbit_split = orbit_content.split(',')
+            if len(orbit_split) == 2:
+                message = orbit_split[0].strip().strip(speech_marks)  
+                repetitions = orbit_split[1].strip()
+
+                if repetitions == "infinity":
+                    while True: 
+                        print(message)
+                        
+                elif repetitions.isdigit(): 
+                    loop_count = int(repetitions)
+                    for _ in range(loop_count): 
+                        print(message)
+                        
+                else:
+                    print("Error: Invalid number of repetitions.")
+            else:
+                print("Error: Incorrect number of arguments provided for orbit.")
+        else:
+            print("Error: Missing comma in orbit function arguments.")
+            
 # Main processing function
 def axion():
     while True:
@@ -192,7 +202,10 @@ def axion():
                     react_function(user_input)
                 
                 elif last_word == "guide_to_the_galaxy":
-                    guide_to_the_galaxy()    
+                    guide_to_the_galaxy()  
+                    
+                elif last_word == "orbit":
+                    orbit(user_input, start_index, end_index)  
                                     
             else:
                 print(f"Error: There is no attribute called {last_word}")
